@@ -1,0 +1,39 @@
+{
+  "name": "@bigfootds/bigfoot-fetcher",
+  "version": "1.0.0",
+  "description": "JavaScript fetch override for cohesive, consistent usage across various BigfootDS projects.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "npm run build && npm run start",
+    "build": "tsc",
+    "envcheck": "echo %npm_package_bigfootds_game%"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BigfootDS/Bigfoot-Fetcher.git"
+  },
+  "keywords": [],
+  "author": "Alex Stormwood <alex.stormwood@bigfootds.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BigfootDS/Bigfoot-Fetcher/issues"
+  },
+  "homepage": "https://github.com/BigfootDS/Bigfoot-Fetcher#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  },
+  "config": {
+    "bigfootds":{
+      "game": "BigfootDS Testo"
+    }
+  }
+}
