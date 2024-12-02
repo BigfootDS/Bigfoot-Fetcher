@@ -1,6 +1,6 @@
 {
   "name": "@bigfootds/bigfoot-fetcher",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "JavaScript fetch override for cohesive, consistent usage across various BigfootDS projects.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -15,7 +15,7 @@
     "dev": "npm run build && npm run start",
     "build": "tsc",
     "envcheck:ps": "echo %npm_package_config_bigfootds_productName%",
-    "envcheck:bash":"echo ${npm_package_config_bigfootds_productName}"
+    "envcheck:bash": "echo ${npm_package_config_bigfootds_productName}"
   },
   "repository": {
     "type": "git",
