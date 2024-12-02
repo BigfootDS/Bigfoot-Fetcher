@@ -14,15 +14,20 @@
     "start": "node dist/index.js",
     "dev": "npm run build && npm run start",
     "build": "tsc",
-    "envcheck": "echo %npm_package_bigfootds_game%"
+    "envcheck:ps": "echo %npm_package_config_bigfootds_productName%",
+    "envcheck:bash":"echo ${npm_package_config_bigfootds_productName}"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BigfootDS/Bigfoot-Fetcher.git"
   },
   "keywords": [],
-  "author": "Alex Stormwood <alex.stormwood@bigfootds.com>",
-  "license": "ISC",
+  "author": {
+    "name": "Alex Stormwood",
+    "email": "alex@bigfootds.com",
+    "url": "https://github.com/AlexStormwood"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/BigfootDS/Bigfoot-Fetcher/issues"
   },
@@ -31,9 +36,9 @@
     "@types/node": "^22.10.1",
     "typescript": "^5.7.2"
   },
-  "config": {
-    "bigfootds":{
-      "game": "BigfootDS Testo"
-    }
+  "dependencies": {
+    "bowser": "^2.11.0",
+    "dotenv": "^16.4.5",
+    "my-ua-parser": "^2.0.4"
   }
 }
