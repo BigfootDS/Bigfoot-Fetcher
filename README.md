@@ -25,17 +25,50 @@ import bigfootFetcher from "@bigfootds/bigfoot-fetcher";
 
 Then, use `bigfootFetcher` in place of any fetch function calls. It's a wrapper around fetch!
 
-## More Info
+```js
+app.get("/headers", (request, response) => {
+    response.json({result: JSON.stringify(request.headers)});
+})
+
+bigfootFetcher("http://localhost:3030/headers")
+    .then(async (response) => {return await response.json()})
+    .then((data) => {
+        console.log("Returned headers:");
+        console.log(data);
+    });
+```
+
+```
+Returned headers:
+{
+  result: '{"host":"localhost:3030","connection":"keep-alive","osname":"Linux","osversion":"5.15.0-125-generic","platformname":"API","platformtype":"api","productname":"@bigfootds/ms-auth","accept":"*/*","accept-language":"*","sec-fetch-mode":"cors","user-agent":"node","accept-encoding":"gzip, deflate"}'
+}
+```
+
+Note that the headers above are populated by some default request headers as well as the "Bigfoot Fetcher" headers, which come from a `package.json` contents like this:
+
+```json
+{
+    "name": "@bigfootds/ms-auth",
+     "version": "1.0.1",
+    "description": "Core authentication & IAM services for BigfootDS & its various games and products.",
+    "config":{
+        "bigfootds":{
+            "platformType":"api",
+            "platformName":"API",
+            "productName":"@bigfootds/ms-auth"
+        }
+    },
+}
+```
+
 
 These headers are added to all fetch requests that use this package's fetcher function:
 
 
 ```typescript
 interface BigfootDSConfig {
-    // Set in environment variables or package.json, access with properties like `process.env.npm_package_config_bigfootds_productName`:
-	productName?: string // also retrievable as environment variable
-
-    // Retrievable via Bowser or "My User Agent Parser" NPM packages, or environment variables:
+	productName?: string 
     browserName?: string,
     browserVersion?: string,
     browserEngineName?: string,
@@ -43,20 +76,9 @@ interface BigfootDSConfig {
     osName?: string,
     osVersion?: string,
     osVersionName?: string,
-    platformType?: string, // also retrievable as environment variable
-
-    // Retrievable as environment variables:
-    platformName?: string // set as environment variable, preferably at build time in a GitHub Action workflow
+    platformType?: string, 
+    platformName?: string 
 }
 ```
 
-The `package.json` file of a project using this package should include a config object like this:
-
-```json
-"config": {
-    "bigfootds": {
-        "productName": "Game Name Goes Here",
-        "platformName": "Steam Deck or other platform determined at build time"
-    }
-},
-```
+Whether or not they are actually added depends on if they have value, and they don't all have value on all platforms. e.g. no browser properties in the NodeJS environment!

@@ -11,8 +11,8 @@ import os from "node:os";
 // console.log(process.env.npm_package_testo);
 // console.log(process.env.npm_package_scripts_start)
 
-export default function fetcher(requestTarget: RequestInfo | URL, options: RequestInit){
-	const defaultHeaders: HeadersInit = new Headers(options.headers);
+export default function fetcher(requestTarget: RequestInfo | URL, options?: RequestInit){
+	const defaultHeaders: HeadersInit = options ? new Headers(options.headers) : new Headers();
     let bigfootDSConfigData: BigfootDSConfig = {}
     if (typeof self === 'undefined') { 
         /* neither web window nor web worker, must be node environment */ 
@@ -22,6 +22,8 @@ export default function fetcher(requestTarget: RequestInfo | URL, options: Reque
         bigfootDSConfigData = getInfoViaBrowser();
     }
 
+    // console.log(JSON.stringify(bigfootDSConfigData));
+
 
     (Object.keys(bigfootDSConfigData) as Array<keyof BigfootDSConfig>).forEach((key) => {
         if (bigfootDSConfigData[key]){
@@ -29,8 +31,12 @@ export default function fetcher(requestTarget: RequestInfo | URL, options: Reque
         }
     });
 
+    let localOptions = options ? options : {headers: defaultHeaders};
+    if (options) {
+        localOptions.headers = {...options.headers, ...defaultHeaders}
+    }
 
-	return fetch(requestTarget);
+	return fetch(requestTarget, localOptions);
 }
 
 export function getInfoViaBrowser(){
@@ -96,6 +102,8 @@ export function getInfoViaNode(){
         osVersion: 
             os.release(),
         platformType: 
+            process.env.npm_package_config_bigfootds_platformType ||
+            process.env.npm_package_platformType ||
             process.env.PLATFORMTYPE || 
             process.env.PLATFORM_TYPE || 
             process.env.REACT_APP_PLATFORM_TYPE || 
@@ -103,6 +111,8 @@ export function getInfoViaNode(){
             process.env.VITE_PLATFORM_TYPE || 
             process.env.VITE_PLATFORMTYPE,
         platformName:
+            process.env.npm_package_config_bigfootds_platformName ||
+            process.env.npm_package_platformName ||
             process.env.PLATFORMNAME || 
             process.env.PLATFORM_NAME || 
             process.env.REACT_APP_PLATFORM_NAME || 
