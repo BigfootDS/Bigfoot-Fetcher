@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+// import dotenv from "dotenv";
+// dotenv.config();
 import Bowser from "bowser"; // TypeScript
 import MyUaParser from "my-ua-parser";
 import os from "node:os";
@@ -11,7 +11,7 @@ import os from "node:os";
 // console.log(process.env.npm_package_testo);
 // console.log(process.env.npm_package_scripts_start)
 
-export default function fetcher(requestTarget: RequestInfo | URL, options?: RequestInit){
+export function fetcher(requestTarget: RequestInfo | URL, options?: RequestInit){
 	const defaultHeaders: HeadersInit = options ? new Headers(options.headers) : new Headers();
     let bigfootDSConfigData: BigfootDSConfig = {}
     if (typeof self === 'undefined') { 
@@ -39,7 +39,7 @@ export default function fetcher(requestTarget: RequestInfo | URL, options?: Requ
 	return fetch(requestTarget, localOptions);
 }
 
-export function getInfoViaBrowser(){
+function getInfoViaBrowser(){
     const browser = Bowser.getParser(window.navigator.userAgent);
     const bowserResult = browser.getResult();
     const userAgentParsed = MyUaParser(window.navigator.userAgent);
@@ -61,13 +61,15 @@ export function getInfoViaBrowser(){
             bowserResult.os.name ||
             userAgentParsed.os.name,
         osVersion: 
-            bowserResult.os.version  || 
-            userAgentParsed.os.version,
+            userAgentParsed.os.version|| 
+            bowserResult.os.version,
         osVersionName: 
+            userAgentParsed.os.version || 
             bowserResult.os.versionName,
         platformType: 
             process.env.npm_package_config_bigfootds_platformType ||
             process.env.npm_package_platformType ||
+            process.env.platformType || 
             process.env.PLATFORMTYPE || 
             process.env.PLATFORM_TYPE || 
             process.env.REACT_APP_PLATFORM_TYPE || 
@@ -78,6 +80,7 @@ export function getInfoViaBrowser(){
         platformName:
             process.env.npm_package_config_bigfootds_platformName ||
             process.env.npm_package_platformName ||
+            process.env.platformName || 
             process.env.PLATFORMNAME || 
             process.env.PLATFORM_NAME || 
             process.env.REACT_APP_PLATFORM_NAME || 
@@ -87,6 +90,7 @@ export function getInfoViaBrowser(){
         productName:
             process.env.npm_package_config_bigfootds_productName ||
             process.env.npm_package_productName ||
+            process.env.productName || 
             process.env.PRODUCTNAME || 
             process.env.PRODUCT_NAME || 
             process.env.REACT_APP_PRODUCT_NAME || 
@@ -98,7 +102,7 @@ export function getInfoViaBrowser(){
     return result;
 }
 
-export function getInfoViaNode(){
+function getInfoViaNode(){
 
     let result: BigfootDSConfig = {
         osName: 
@@ -108,6 +112,7 @@ export function getInfoViaNode(){
         platformType: 
             process.env.npm_package_config_bigfootds_platformType ||
             process.env.npm_package_platformType ||
+            process.env.platformType || 
             process.env.PLATFORMTYPE || 
             process.env.PLATFORM_TYPE || 
             process.env.REACT_APP_PLATFORM_TYPE || 
@@ -117,6 +122,7 @@ export function getInfoViaNode(){
         platformName:
             process.env.npm_package_config_bigfootds_platformName ||
             process.env.npm_package_platformName ||
+            process.env.platformName || 
             process.env.PLATFORMNAME || 
             process.env.PLATFORM_NAME || 
             process.env.REACT_APP_PLATFORM_NAME || 
@@ -126,6 +132,7 @@ export function getInfoViaNode(){
         productName:
             process.env.npm_package_config_bigfootds_productName ||
             process.env.npm_package_productName ||
+            process.env.productName || 
             process.env.PRODUCTNAME || 
             process.env.PRODUCT_NAME || 
             process.env.REACT_APP_PRODUCT_NAME || 

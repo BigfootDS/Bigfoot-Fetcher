@@ -32,13 +32,15 @@
     "url": "https://github.com/BigfootDS/Bigfoot-Fetcher/issues"
   },
   "homepage": "https://github.com/BigfootDS/Bigfoot-Fetcher#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "devDependencies": {
     "@types/node": "^22.10.1",
     "typescript": "^5.7.2"
   },
   "dependencies": {
     "bowser": "^2.11.0",
-    "dotenv": "^16.4.5",
     "my-ua-parser": "^2.0.4"
   }
 }
