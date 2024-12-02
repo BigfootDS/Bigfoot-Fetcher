@@ -66,6 +66,8 @@ export function getInfoViaBrowser(){
         osVersionName: 
             bowserResult.os.versionName,
         platformType: 
+            process.env.npm_package_config_bigfootds_platformType ||
+            process.env.npm_package_platformType ||
             process.env.PLATFORMTYPE || 
             process.env.PLATFORM_TYPE || 
             process.env.REACT_APP_PLATFORM_TYPE || 
@@ -74,6 +76,8 @@ export function getInfoViaBrowser(){
             process.env.VITE_PLATFORMTYPE ||
             bowserResult.platform.type,
         platformName:
+            process.env.npm_package_config_bigfootds_platformName ||
+            process.env.npm_package_platformName ||
             process.env.PLATFORMNAME || 
             process.env.PLATFORM_NAME || 
             process.env.REACT_APP_PLATFORM_NAME || 
