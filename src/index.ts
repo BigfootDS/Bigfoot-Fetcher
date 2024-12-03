@@ -97,6 +97,17 @@ function getInfoViaBrowser(){
             process.env.REACT_APP_PRODUCTNAME ||
             process.env.VITE_PRODUCT_NAME || 
             process.env.VITE_PRODUCTNAME,
+        productVersion:
+            process.env.npm_package_config_bigfootds_productVersion ||
+            process.env.npm_package_productVersion ||
+            process.env.productVersion || 
+            process.env.PRODUCTVERSION || 
+            process.env.PRODUCT_VERSION || 
+            process.env.REACT_APP_PRODUCT_VERSION || 
+            process.env.REACT_APP_PRODUCTVERSION ||
+            process.env.VITE_PRODUCT_VERSION || 
+            process.env.VITE_PRODUCTVERSION ||
+            process.env.npm_package_version,
     }
 
     return result;
@@ -139,6 +150,17 @@ function getInfoViaNode(){
             process.env.REACT_APP_PRODUCTNAME ||
             process.env.VITE_PRODUCT_NAME || 
             process.env.VITE_PRODUCTNAME,
+        productVersion:
+            process.env.npm_package_config_bigfootds_productVersion ||
+            process.env.npm_package_productVersion ||
+            process.env.productVersion || 
+            process.env.PRODUCTVERSION || 
+            process.env.PRODUCT_VERSION || 
+            process.env.REACT_APP_PRODUCT_VERSION || 
+            process.env.REACT_APP_PRODUCTVERSION ||
+            process.env.VITE_PRODUCT_VERSION || 
+            process.env.VITE_PRODUCTVERSION ||
+            process.env.npm_package_version,
     }
 
     return result;
@@ -147,7 +169,8 @@ function getInfoViaNode(){
 
 interface BigfootDSConfig {
     // Set in package.json, access with properties like `process.env.npm_package_config_bigfootds_productName`:
-	productName?: string // also retrievable as environment variable
+	productName?: string, 
+    productVersion?: string, // also retrievable as environment variable
 
     // Retrievable via Bowser NPM package:
     browserName?: string,

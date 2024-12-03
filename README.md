@@ -174,7 +174,8 @@ These headers are added to all fetch requests that use this package's fetcher fu
 
 ```typescript
 interface BigfootDSConfig {
-    productName?: string 
+    productName?: string, 
+    productVersion?: string,
     browserName?: string,
     browserVersion?: string,
     browserEngineName?: string,
