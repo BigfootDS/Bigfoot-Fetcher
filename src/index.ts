@@ -11,9 +11,27 @@ import os from "node:os";
 // console.log(process.env.npm_package_testo);
 // console.log(process.env.npm_package_scripts_start)
 
+
+/**
+ * Custom extension of the built-in JavaScript `fetch` function. Takes the same parameters as `fetch`, but adds a set of headers to every request.
+ * 
+ * @author BigfootDS
+ *
+ * @export
+ * @param {RequestInfo | URL} requestTarget Preferably just a regular string URL, please.
+ * @param {RequestInit} [options] Fetch options. See {@link https://developer.mozilla.org/en-US/docs/Web/API/RequestInit RequestInit} at MDN Web Docs for more info.
+ * @returns The executing `fetch` function configured with standard BigfootDS-relevant headers.
+ */
 export function fetcher(requestTarget: RequestInfo | URL, options?: RequestInit){
+
+    // Initialise a headers instance using the provided argument data if it's available.
 	const defaultHeaders: HeadersInit = options ? new Headers(options.headers) : new Headers();
+
+
+    // Prep to start assigning our BigfootDS-relevant headers.
     let bigfootDSConfigData: BigfootDSConfig = {}
+
+    // Determine how this function is running: is it in the browser, or in a NodeJS environment?
     if (typeof self === 'undefined') { 
         /* neither web window nor web worker, must be node environment */ 
         bigfootDSConfigData = getInfoViaNode();
@@ -22,22 +40,26 @@ export function fetcher(requestTarget: RequestInfo | URL, options?: RequestInit)
         bigfootDSConfigData = getInfoViaBrowser();
     }
 
-    // console.log(JSON.stringify(bigfootDSConfigData));
 
-
+    // Once the data has been prepared on to `bigfootDSConfigData`, loop through it and apply it to the fetch header configuration.
     (Object.keys(bigfootDSConfigData) as Array<keyof BigfootDSConfig>).forEach((key) => {
         if (bigfootDSConfigData[key]){
             defaultHeaders.set(key, bigfootDSConfigData[key]);
         }
     });
 
+    // Make a local copy of the provided fetch options for easier, safe modifications.
+    // Use this to apply our headers safely.
     let localOptions = options ? options : {headers: defaultHeaders};
     if (options) {
         localOptions.headers = {...options.headers, ...defaultHeaders}
     }
 
+    // Finally, the fetch is ready to call with our custom headers!
 	return fetch(requestTarget, localOptions);
 }
+
+
 
 function getInfoViaBrowser(){
     const browser = Bowser.getParser(window.navigator.userAgent);
