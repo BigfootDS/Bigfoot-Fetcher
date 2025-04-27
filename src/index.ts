@@ -189,7 +189,7 @@ function getInfoViaNode(){
 }
 
 
-interface BigfootDSConfig {
+export interface BigfootDSConfig {
     // Set in package.json, access with properties like `process.env.npm_package_config_bigfootds_productName`:
 	productName?: string, 
     productVersion?: string, // also retrievable as environment variable
